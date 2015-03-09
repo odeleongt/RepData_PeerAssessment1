@@ -57,15 +57,12 @@ median_steps <- quantile(x = daily_activity$steps, probs = 0.5)  # Median, 50%Q
 The number of steps taken daily by the subject are represented in the **figure 1** below. The subject took a mean of `r as.character(mean_steps)` and a median of `r as.character(median_steps)` steps per day.
 
 ```{r plot_steps, fig.width=8, fig.height=4}
-# Plot the total number of steps per day.
+# Plot a histogram of the total number of steps per day.
 # Use ggplot2 to summarize de data, to
 # find inconsistencies with the analysis.
-histogram <- 
-qplot(x=date, y=steps,
-      data=subset(activity, complete.cases(activity)),
-      stat='summary', fun.y=sum, geom='bar') +
-  labs(title='Figure 1: Number of steps taken daily\n',
-       y='Total steps per day', x='Date')
+histogram <- qplot(x=steps, data=daily_activity) +
+  labs(title='Figure 1: Histogram of total steps per day\n',
+       y='Count of each total steps per day', x='Number of steps')
 plot(histogram)
 
 ```
@@ -168,7 +165,7 @@ After imputing the data with the devised strategy, the number of daily steps sho
 
 ```{r plot_imputed, fig.width=8, fig.height=4}
 # Replace the data in the original histogram with the imputed data
-histogram %+% imputed_activity +
+histogram %+% daily_imputed_activity +
   labs(title='Figure 3: Number of steps taken each day,\nafter imputing missing values')
 
 ```
